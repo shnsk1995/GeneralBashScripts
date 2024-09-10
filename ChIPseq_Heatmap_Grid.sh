@@ -47,22 +47,33 @@ done
 
 #Creating required directories
 echo 'Creating required directories'
-mkdir ${Data_path}/matrix_grid
-mkdir ${Data_path}/heatmaps_grid
+#mkdir ${Data_path}/matrix_grid
+#mkdir ${Data_path}/heatmaps_grid
+mkdir ${Data_path}/profile_grid
 
 
 #Using computeMatrix function to obtain comprehensive gzipped table
-echo 'Using computeMatrix function to obtain comprehensive gzipped table'
-computeMatrix reference-point -S "${File_paths[@]}" -R ${Data_path}/RefSeq_Final_Merged_Bedfile.bed -out H3K4Me3_Auxin_matrix.gz  --referencePoint center  -a 5000 -b 5000
-	mv H3K4Me3_Auxin_matrix.gz ${Data_path}/matrix_grid/
-echo 'Comprehensive matrix file generated!'
+#echo 'Using computeMatrix function to obtain comprehensive gzipped table'
+#computeMatrix reference-point -S "${File_paths[@]}" -R ${Data_path}/RefSeq_Final_Merged_Bedfile.bed -out H3K4Me3_Auxin_matrix.gz  --referencePoint center  -a 5000 -b 5000
+#	mv H3K4Me3_Auxin_matrix.gz ${Data_path}/matrix_grid/
+#echo 'Comprehensive matrix file generated!'
+
+
+#Using plotProfile function to obtain profile grid plot
+echo 'Using plotProfile function to obtain profile grid plot'
+plotProfile -m ${Data_path}/matrix_grid/H3K4Me3_Auxin_matrix.gz --outFileName H3K4Me3_Auxin_profile --yMin 0 --yMax 100 --yAxisLabel "ChIP-seq enrichment" --samplesLabel "0 h" "2 h" "8 h" "24 h" --refPointLabel TSS --plotTitle H3K4me3 --outFileNameData H3K4Me3_Auxin_profile_data.tsv 
+        mv H3K4Me3_Auxin_profile.png ${Data_path}/profile_grid/
+	mv H3K4Me3_Auxin_profile_data.tsv ${Data_path}/profile_grid/
+echo 'Profile grid generated!'
+
+
 
 
 #Using plotHeatmap function to obtain heatmap grid plot
-echo 'Using plotHeatmap function to obtain heatmap grid plot'
-plotHeatmap -m ${Data_path}/matrix_grid/H3K4Me3_Auxin_matrix.gz --outFileName H3K4Me3_Auxin_heatmap --zMin 0 --zMax 120 --yMin 0 --yMax 100 --xAxisLabel "Position (kb)" --yAxisLabel "ChIP-seq enrichment" --samplesLabel "0 h" "2 h" "8 h" "24 h" --refPointLabel TSS --plotTitle H3K4me3
-	mv H3K4Me3_Auxin_heatmap.png ${Data_path}/heatmaps_grid/
-echo 'Heatmap grid generated!'
+#echo 'Using plotHeatmap function to obtain heatmap grid plot'
+#plotHeatmap -m ${Data_path}/matrix_grid/H3K4Me3_Auxin_matrix.gz --outFileName H3K4Me3_Auxin_heatmap --zMin 0 --zMax 120 --yMin 0 --yMax 100 --xAxisLabel "Position (kb)" --yAxisLabel "ChIP-seq enrichment" --samplesLabel "0 h" "2 h" "8 h" "24 h" --refPointLabel TSS --plotTitle H3K4me3
+#	mv H3K4Me3_Auxin_heatmap.png ${Data_path}/heatmaps_grid/
+#echo 'Heatmap grid generated!'
 
 
 #Deactivate conda environment
